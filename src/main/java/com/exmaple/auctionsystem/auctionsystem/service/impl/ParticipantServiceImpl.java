@@ -24,18 +24,22 @@ public class ParticipantServiceImpl implements ParticipantService {
     this.repository = repository;
   }
 
+  @Override
   public List<ParticipantBo> getAllParticipants(){
     return repository.findAll(Sort.by("id"));
   }
 
+  @Override
   public ParticipantBo getParticipantById(Long id){
     return repository.findById(id).orElseThrow(() -> getNotFoundError(id));
   }
 
+  @Override
   public ParticipantBo createParticipant(ParticipantPostDto dto){
     return repository.save(mapper.toParticipant(dto));
   }
 
+  @Override
   public ParticipantBo updateParticipant(Long id, ParticipantPostDto dto){
     ParticipantBo participant = repository.findById(id).orElseThrow(() -> getNotFoundError(id));
     participant.setName(dto.getName());
@@ -44,6 +48,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     return repository.save(participant);
   }
 
+  @Override
   public void deleteParticipant(Long id){
      ParticipantBo participant = repository.findById(id).orElseThrow(() -> getNotFoundError(id));
      repository.delete(participant);

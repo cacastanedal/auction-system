@@ -1,5 +1,7 @@
 package com.exmaple.auctionsystem.auctionsystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,7 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
@@ -33,6 +37,7 @@ public class ParticipantBo {
   private String name;
   private String personalIdentification;
 
-  @OneToMany()
-  private Set<ItemBo> items = new HashSet<>();
+  @JsonIgnore
+  @OneToMany(mappedBy = "participant")
+  private List<ItemBo> items;
 }

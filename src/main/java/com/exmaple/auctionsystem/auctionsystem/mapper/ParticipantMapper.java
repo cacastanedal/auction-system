@@ -7,8 +7,5 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface ParticipantMapper {
-
-  ParticipantMapper INSTANCE = Mappers.getMapper(ParticipantMapper.class);
-
   ParticipantBo toParticipant(ParticipantPostDto participantPostDto);
 }

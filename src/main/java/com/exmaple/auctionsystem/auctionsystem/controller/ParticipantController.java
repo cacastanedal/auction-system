@@ -4,6 +4,7 @@ import com.exmaple.auctionsystem.auctionsystem.domain.ParticipantBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantPostDto;
 import com.exmaple.auctionsystem.auctionsystem.service.ParticipantService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,10 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "/participant")
+@RequiredArgsConstructor
 public class ParticipantController {
 
   private final ParticipantService participantService;
-
-  public ParticipantController(ParticipantService service){
-    this.participantService = service;
-  }
 
   @GetMapping
   ResponseEntity<List<ParticipantBo>> getAllParticipants(){
