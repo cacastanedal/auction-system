@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @Slf4j
 public class ParticipantServiceImpl implements ParticipantService {
@@ -22,7 +24,8 @@ public class ParticipantServiceImpl implements ParticipantService {
   }
 
   public Participant getParticipantById(Long id){
-    return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    return repository.findById(id).orElseThrow(() ->
+      new EntityNotFoundException(String.format("Participant with id %s doesn't exist", id)));
   }
 
   public Participant createParticipant(ParticipantPostDto dto){
