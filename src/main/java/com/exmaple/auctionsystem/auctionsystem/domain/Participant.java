@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -20,7 +22,7 @@ import java.util.Set;
 @Data
 public class Participant {
 
-  private @Id @GeneratedValue Long id;
+  private @Id @GeneratedValue(strategy = SEQUENCE) Long id;
   private String name;
   private String personalIdentification;
 
