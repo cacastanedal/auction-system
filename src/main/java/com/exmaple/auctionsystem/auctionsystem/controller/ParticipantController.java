@@ -1,11 +1,9 @@
 package com.exmaple.auctionsystem.auctionsystem.controller;
 
-import com.exmaple.auctionsystem.auctionsystem.domain.Participant;
+import com.exmaple.auctionsystem.auctionsystem.domain.ParticipantBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantPostDto;
 import com.exmaple.auctionsystem.auctionsystem.service.ParticipantService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,23 +31,23 @@ public class ParticipantController {
   }
 
   @GetMapping
-  ResponseEntity<List<Participant>> getAllParticipants(){
+  ResponseEntity<List<ParticipantBo>> getAllParticipants(){
     return new ResponseEntity<>(participantService.getAllParticipants(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<Participant> getParticipant(@PathVariable Long id){
-    Participant result = participantService.getParticipantById(id);
+  ResponseEntity<ParticipantBo> getParticipant(@PathVariable Long id){
+    ParticipantBo result = participantService.getParticipantById(id);
     return ResponseEntity.ok(result);
   }
 
   @PostMapping("/create")
-  ResponseEntity<Participant> createParticipant(@RequestBody ParticipantPostDto body){
+  ResponseEntity<ParticipantBo> createParticipant(@RequestBody ParticipantPostDto body){
     return new ResponseEntity<>(participantService.createParticipant(body), HttpStatus.CREATED);
   }
 
   @PutMapping("/update/{id}")
-  ResponseEntity<Participant> updateParticipant(@PathVariable Long id, @RequestBody ParticipantPostDto body){
+  ResponseEntity<ParticipantBo> updateParticipant(@PathVariable Long id, @RequestBody ParticipantPostDto body){
     return new ResponseEntity<>(participantService.updateParticipant(id, body), HttpStatus.OK);
   }
 
