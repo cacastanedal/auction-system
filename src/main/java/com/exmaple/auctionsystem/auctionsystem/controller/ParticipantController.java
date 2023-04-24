@@ -55,8 +55,5 @@ public class ParticipantController {
     return new ResponseEntity<>(null, HttpStatus.OK);
   }
 
-  @ExceptionHandler(EntityNotFoundException.class)
-  public ResponseEntity<String> handleException(Exception e){
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-  }
+
 }

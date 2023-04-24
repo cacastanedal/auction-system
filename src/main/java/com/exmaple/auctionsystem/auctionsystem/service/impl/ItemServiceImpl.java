@@ -40,12 +40,12 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public ItemBo getItem(Long id){
-    return itemRepository.getReferenceById(id);
+    return itemRepository.findById(id).orElseThrow(() -> getNotFoundError(id));
   }
 
   @Override
   public ItemBo updateItem(Long id, ItemPostDto dto) {
-    ItemBo item = itemRepository.getReferenceById(id);
+    ItemBo item = itemRepository.findById(id).orElseThrow(() -> getNotFoundError(id));
     item.setName(dto.getName());
     item.setDescription(dto.getDescription());
 
@@ -54,9 +54,13 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public void deleteItem(Long id) {
-    ItemBo item = itemRepository.getReferenceById(id);
+    ItemBo item = itemRepository.findById(id).orElseThrow(() -> getNotFoundError(id));
 
     itemRepository.delete(item);
+  }
+
+  private EntityNotFoundException getNotFoundError(Long id){
+    return new EntityNotFoundException(String.format("Item with id %s doesn't exist", id));
   }
 
 }
