@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -31,7 +32,7 @@ public class BidBo {
   @GeneratedValue(strategy = GenerationType.TABLE)
   private Long id;
 
-  private Double price;
+  private BigDecimal price;
 
   @ManyToOne
   @JoinColumn(name = "participant_id")
