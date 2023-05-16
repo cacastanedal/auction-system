@@ -9,38 +9,37 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @UtilityClass
 @Slf4j
 public class JwtUtils {
 
-  @Value("${jwt.secret}")
-  private String jwtSecret;
-  @Value("${jwt.expiration.ms}")
-  private String jwtExpirationMs;
+  private final String JWT_SECRET = "jwt.secret";
+  private final int JWT_EXPIRATION_MS = 86400000;
 
   public String generateJwtToken(Authentication authentication){
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
     return Jwts.builder()
       .setSubject(userPrincipal.getUsername())
-      .setIssuedAt(new Date()) //TODO: Improve dates with Calendar
-      .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-      .signWith(SignatureAlgorithm.HS256, jwtSecret)
+      .setIssuer("Application")
+      .setIssuedAt(new Date())
+      .setExpiration(new Date((new Date()).getTime() + JWT_EXPIRATION_MS))
+      .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
       .compact();
   }
 
   public String getUserNameFromJwtToken(String token) {
-    return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
   }
 
   public boolean validateJwtToken(String authToken) {
     try {
-      Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+      Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
       return true;
     } catch (SignatureException e) {
       log.error("Invalid JWT signature: {}", e.getMessage());
