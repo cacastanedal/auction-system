@@ -3,14 +3,13 @@ package com.exmaple.auctionsystem.auctionsystem.config;
 import com.exmaple.auctionsystem.auctionsystem.jwt.AuthEntryPointJwt;
 import com.exmaple.auctionsystem.auctionsystem.jwt.AuthTokenFilter;
 import com.exmaple.auctionsystem.auctionsystem.service.impl.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,18 +24,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalAuthentication
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  final private UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
+  final private AuthEntryPointJwt unauthorizedHandler;
 
-  @Bean
-  public AuthTokenFilter authenticationJwtTokenFilter(){
-    return new AuthTokenFilter();
-  }
+  final private AuthTokenFilter authTokenFilter;
 
   @Bean
   public PasswordEncoder passwordEncoder(){
@@ -71,7 +66,7 @@ public class WebSecurityConfig {
 
     http.authenticationProvider(authenticationProvider());
 
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

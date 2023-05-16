@@ -3,6 +3,7 @@ package com.exmaple.auctionsystem.auctionsystem.service.impl;
 import com.exmaple.auctionsystem.auctionsystem.domain.User;
 import com.exmaple.auctionsystem.auctionsystem.persistence.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired
-  UserRepository repository;
+  private final UserRepository repository;
 
   @Transactional
   public UserDetails loadUserByUsername(String username){
