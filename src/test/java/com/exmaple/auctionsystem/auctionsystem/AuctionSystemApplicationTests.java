@@ -11,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class AuctionSystemApplicationTests {
 
 	@Test
-	@Disabled
 	void contextLoads() {
 	}
 
