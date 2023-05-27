@@ -1,10 +1,10 @@
 package com.exmaple.auctionsystem.auctionsystem.service.impl;
 
-import com.exmaple.auctionsystem.auctionsystem.domain.User;
+import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
+import com.exmaple.auctionsystem.auctionsystem.domain.auth.UserDetailsImpl;
 import com.exmaple.auctionsystem.auctionsystem.persistence.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,15 +21,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Transactional
   public UserDetails loadUserByUsername(String username){
-    User user = repository.findByUsername(username)
+    UserBo userBo = repository.findByUsername(username)
       .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
     return UserDetailsImpl.builder()
-      .id(user.getId())
-      .username(user.getUsername())
-      .email(user.getEmail())
-      .password(user.getPassword())
-      .authorities(user.getRoles().stream()
+      .id(userBo.getId())
+      .username(userBo.getUsername())
+      .email(userBo.getEmail())
+      .password(userBo.getPassword())
+      .authorities(userBo.getRoles().stream()
         .map(role -> new SimpleGrantedAuthority(role.getName().name()))
         .collect(Collectors.toList()))
       .build();

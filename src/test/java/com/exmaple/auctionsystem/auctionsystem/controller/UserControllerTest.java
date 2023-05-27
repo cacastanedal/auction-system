@@ -1,6 +1,7 @@
 package com.exmaple.auctionsystem.auctionsystem.controller;
 
 import com.exmaple.auctionsystem.auctionsystem.domain.ParticipantBo;
+import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantPostDto;
 import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantResponseDto;
 import com.exmaple.auctionsystem.auctionsystem.service.ParticipantService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -39,6 +41,20 @@ public class ParticipantControllerTest {
 
     Assertions.assertEquals(response.getStatusCode().value(), 200);
 
+  }
+
+  @Test
+  void getParticipantById(){
+    long participantId = 3L;
+    ParticipantBo participant = ParticipantBo.builder()
+      .id(participantId).build();
+
+    when(service.getParticipantById(participantId)).thenReturn(participant);
+
+    ResponseEntity<ParticipantBo> response = controller.getParticipant(participantId);
+
+    assertThat(response.getStatusCode().value()).isEqualTo(200);
+    assertThat(response.getBody().getId()).isEqualTo(participantId);
   }
 
 }
