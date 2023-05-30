@@ -7,9 +7,10 @@ import java.util.List;
 
 @Builder
 @Data
-public class ParticipantResponseDto {
+public class UserResponseDto {
   private Long id;
-  private String name;
+  private String username;
+  private String nickName;
   private String personalIdentification;
   private List<Long> items_id;
 }

@@ -23,6 +23,6 @@ public class ItemBo {
   private String description;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  private ParticipantBo participant;
+  private UserBo user;
 
 }

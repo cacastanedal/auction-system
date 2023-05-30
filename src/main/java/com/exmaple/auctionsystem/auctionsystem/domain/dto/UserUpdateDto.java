@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder(toBuilder = true)
-public class ParticipantPostDto {
-  public String name;
+public class UserUpdateDto {
+  public String nickName;
   public String personalIdentification;
 }

@@ -1,7 +1,7 @@
 package com.exmaple.auctionsystem.auctionsystem.service;
 
 import com.exmaple.auctionsystem.auctionsystem.domain.Role;
-import com.exmaple.auctionsystem.auctionsystem.domain.User;
+import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.UserRole;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.JwtResponse;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.LoginRequest;
@@ -9,11 +9,8 @@ import com.exmaple.auctionsystem.auctionsystem.domain.auth.SignupRequest;
 import com.exmaple.auctionsystem.auctionsystem.persistence.RoleRepository;
 import com.exmaple.auctionsystem.auctionsystem.persistence.UserRepository;
 import com.exmaple.auctionsystem.auctionsystem.service.impl.AuthServiceImpl;
-import com.exmaple.auctionsystem.auctionsystem.service.impl.UserDetailsImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import com.exmaple.auctionsystem.auctionsystem.domain.auth.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,7 +59,10 @@ public class AuthServiceTest {
       .authorities(Collections.emptyList())
       .build();
 
-    Authentication testAuth = new UsernamePasswordAuthenticationToken(loggedUser, "test");
+
+    Authentication testAuth =
+      new UsernamePasswordAuthenticationToken(loggedUser, "test", List.of());
+
     LoginRequest testRequest = LoginRequest.builder()
       .username("test")
       .password("test")
@@ -93,6 +94,6 @@ public class AuthServiceTest {
 
     authService.registerUser(request);
 
-    verify(userRepository).save(any(User.class)); //TODO: Improve validation for saved user
+    verify(userRepository).save(any(UserBo.class)); //TODO: Improve validation for saved user
   }
 }

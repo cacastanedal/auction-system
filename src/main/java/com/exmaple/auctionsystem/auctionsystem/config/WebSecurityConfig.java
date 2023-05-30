@@ -2,7 +2,7 @@ package com.exmaple.auctionsystem.auctionsystem.config;
 
 import com.exmaple.auctionsystem.auctionsystem.jwt.AuthEntryPointJwt;
 import com.exmaple.auctionsystem.auctionsystem.jwt.AuthTokenFilter;
-import com.exmaple.auctionsystem.auctionsystem.service.impl.UserDetailsServiceImpl;
+import com.exmaple.auctionsystem.auctionsystem.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  final private UserDetailsServiceImpl userDetailsService;
+  final private UserServiceImpl userDetailsService;
 
   final private AuthEntryPointJwt unauthorizedHandler;
 

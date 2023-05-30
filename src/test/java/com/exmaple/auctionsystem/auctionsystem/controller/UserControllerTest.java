@@ -1,9 +1,8 @@
 package com.exmaple.auctionsystem.auctionsystem.controller;
 
-import com.exmaple.auctionsystem.auctionsystem.domain.ParticipantBo;
-import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantPostDto;
-import com.exmaple.auctionsystem.auctionsystem.domain.dto.ParticipantResponseDto;
-import com.exmaple.auctionsystem.auctionsystem.service.ParticipantService;
+import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
+import com.exmaple.auctionsystem.auctionsystem.domain.dto.UserResponseDto;
+import com.exmaple.auctionsystem.auctionsystem.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,25 +18,25 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @SpringBootTest
-public class ParticipantControllerTest {
+public class UserControllerTest {
 
   @Autowired
-  private ParticipantController controller;
+  private UserController controller;
 
   @MockBean
-  private ParticipantService service;
+  private UserService service;
 
 
   @Test
   void getAllParticipants(){
 
-    List<ParticipantBo> allParticipants = List.of(ParticipantBo.builder().id(1L).build(),
-      ParticipantBo.builder().id(2L).build()
+    List<UserBo> allParticipants = List.of(UserBo.builder().id(1L).build(),
+      UserBo.builder().id(2L).build()
     );
 
-    when(service.getAllParticipants()).thenReturn(allParticipants);
+    when(service.getAllUsers()).thenReturn(allParticipants);
 
-    ResponseEntity<List<ParticipantResponseDto>> response = controller.getAllParticipants();
+    ResponseEntity<List<UserResponseDto>> response = controller.getAllUsers();
 
     Assertions.assertEquals(response.getStatusCode().value(), 200);
 
@@ -45,16 +44,16 @@ public class ParticipantControllerTest {
 
   @Test
   void getParticipantById(){
-    long participantId = 3L;
-    ParticipantBo participant = ParticipantBo.builder()
-      .id(participantId).build();
+    long userId = 3L;
+    UserBo user = UserBo.builder()
+      .id(userId).build();
 
-    when(service.getParticipantById(participantId)).thenReturn(participant);
+    when(service.getUserById(userId)).thenReturn(user);
 
-    ResponseEntity<ParticipantBo> response = controller.getParticipant(participantId);
+    ResponseEntity<UserBo> response = controller.getParticipant(userId);
 
     assertThat(response.getStatusCode().value()).isEqualTo(200);
-    assertThat(response.getBody().getId()).isEqualTo(participantId);
+    assertThat(response.getBody().getId()).isEqualTo(userId);
   }
 
 }

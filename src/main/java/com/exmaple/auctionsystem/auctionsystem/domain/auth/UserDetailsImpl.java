@@ -1,4 +1,4 @@
-package com.exmaple.auctionsystem.auctionsystem.service.impl;
+package com.exmaple.auctionsystem.auctionsystem.domain.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

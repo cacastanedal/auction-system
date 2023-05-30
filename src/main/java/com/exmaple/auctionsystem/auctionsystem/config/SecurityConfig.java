@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import javax.sql.DataSource;
 
 
-@Configuration
+//@Configuration
 public class SecurityConfig {
 
   @Autowired

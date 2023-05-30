@@ -1,6 +1,6 @@
 package com.exmaple.auctionsystem.auctionsystem.jwt;
 
-import com.exmaple.auctionsystem.auctionsystem.service.impl.UserDetailsImpl;
+import com.exmaple.auctionsystem.auctionsystem.domain.auth.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -11,7 +11,6 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 
-import java.util.Calendar;
 import java.util.Date;
 
 @UtilityClass

@@ -8,5 +8,5 @@ import lombok.Data;
 public class ItemPostDto {
   private String name;
   private String description;
-  private Long participant_id;
+  private Long user_id;
 }

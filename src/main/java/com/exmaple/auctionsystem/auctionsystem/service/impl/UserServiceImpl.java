@@ -2,20 +2,23 @@ package com.exmaple.auctionsystem.auctionsystem.service.impl;
 
 import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.UserDetailsImpl;
+import com.exmaple.auctionsystem.auctionsystem.domain.dto.UserUpdateDto;
 import com.exmaple.auctionsystem.auctionsystem.persistence.UserRepository;
+import com.exmaple.auctionsystem.auctionsystem.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService {
 
   private final UserRepository repository;
 
@@ -33,6 +36,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         .map(role -> new SimpleGrantedAuthority(role.getName().name()))
         .collect(Collectors.toList()))
       .build();
+  }
+
+  @Override
+  public List<UserBo> getAllUsers(){
+    return repository.findAll();
+  }
+
+  @Override
+  public UserBo getUserById(Long id){
+    return repository.findById(id).orElseThrow(() -> getNotFoundError(id));
+  }
+
+  @Override
+  public UserBo updateUser(Long id, UserUpdateDto dto){
+    UserBo userBo = repository.findById(id).orElseThrow(() -> getNotFoundError(id));
+
+    userBo.setNickName(dto.getNickName());
+    userBo.setPersonalIdentification(dto.getPersonalIdentification());
+
+    return repository.save(userBo);
+  }
+
+  private EntityNotFoundException getNotFoundError(Long id){
+    return new EntityNotFoundException(String.format("User with id %s doesn't exist", id));
   }
 
 }

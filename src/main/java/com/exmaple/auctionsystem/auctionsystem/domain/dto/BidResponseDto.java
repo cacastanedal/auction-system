@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class BidResponseDto {
   private Long id;
   private BigDecimal price;
-  private Long participant_id;
+  private Long user_id;
   private LocalDateTime createdAt;
   private Long auction_id;
 }

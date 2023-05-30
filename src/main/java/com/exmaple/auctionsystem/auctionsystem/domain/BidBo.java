@@ -35,8 +35,8 @@ public class BidBo {
   private BigDecimal price;
 
   @ManyToOne
-  @JoinColumn(name = "participant_id")
-  private ParticipantBo participant;
+  @JoinColumn(name = "user_id")
+  private UserBo user;
 
   private LocalDateTime createdAt;
 

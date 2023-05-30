@@ -37,7 +37,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @Builder
-public class User {
+public class UserBo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -64,6 +64,8 @@ public class User {
   private Set<Role> roles = new HashSet<>();
 
   private String nickName;
+
+  private String personalIdentification;
 
   @JsonIgnore
   @OneToMany(mappedBy = "user")

@@ -1,11 +1,12 @@
 package com.exmaple.auctionsystem.auctionsystem.service.impl;
 
 import com.exmaple.auctionsystem.auctionsystem.domain.Role;
-import com.exmaple.auctionsystem.auctionsystem.domain.User;
+import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.UserRole;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.JwtResponse;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.LoginRequest;
 import com.exmaple.auctionsystem.auctionsystem.domain.auth.SignupRequest;
+import com.exmaple.auctionsystem.auctionsystem.domain.auth.UserDetailsImpl;
 import com.exmaple.auctionsystem.auctionsystem.jwt.JwtUtils;
 import com.exmaple.auctionsystem.auctionsystem.persistence.RoleRepository;
 import com.exmaple.auctionsystem.auctionsystem.persistence.UserRepository;
@@ -38,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
   public JwtResponse authenticateUser(LoginRequest loginRequest) {
 
-    Authentication authentication = authenticationManager.authenticate(
+    Authentication authentication = authenticationManager.authenticate( // TODO: Test authException
       new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -99,14 +100,14 @@ public class AuthServiceImpl implements AuthService {
       });
     }
 
-    User user = User.builder()
+    UserBo userBo = UserBo.builder()
       .username(signupRequest.getUsername())
       .email(signupRequest.getEmail())
       .password(encoder.encode(signupRequest.getPassword()))
       .roles(userAssignedRoles)
       .build();
 
-    userRepository.save(user);
+    userRepository.save(userBo);
   }
 
 
