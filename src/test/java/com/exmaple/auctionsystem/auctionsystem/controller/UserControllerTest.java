@@ -2,10 +2,16 @@ package com.exmaple.auctionsystem.auctionsystem.controller;
 
 import com.exmaple.auctionsystem.auctionsystem.domain.UserBo;
 import com.exmaple.auctionsystem.auctionsystem.domain.dto.UserResponseDto;
+import com.exmaple.auctionsystem.auctionsystem.mapper.UserMapper;
 import com.exmaple.auctionsystem.auctionsystem.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,15 +22,23 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-@Slf4j
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
 
-  @Autowired
-  private UserController controller;
+  private UserController userController;
 
-  @MockBean
+  @Mock
   private UserService service;
+
+  @Mock
+  private UserMapper mapper;
+
+  @BeforeEach
+  public void setup(){
+    userController = new UserController(service);
+
+  }
 
 
   @Test
@@ -36,7 +50,7 @@ public class UserControllerTest {
 
     when(service.getAllUsers()).thenReturn(allParticipants);
 
-    ResponseEntity<List<UserResponseDto>> response = controller.getAllUsers();
+    ResponseEntity<List<UserResponseDto>> response = userController.getAllUsers();
 
     Assertions.assertEquals(response.getStatusCode().value(), 200);
 
@@ -50,7 +64,7 @@ public class UserControllerTest {
 
     when(service.getUserById(userId)).thenReturn(user);
 
-    ResponseEntity<UserBo> response = controller.getParticipant(userId);
+    ResponseEntity<UserBo> response = userController.getParticipant(userId);
 
     assertThat(response.getStatusCode().value()).isEqualTo(200);
     assertThat(response.getBody().getId()).isEqualTo(userId);

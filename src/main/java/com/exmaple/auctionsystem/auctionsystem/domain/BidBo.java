@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,8 +29,10 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class BidBo {
+
   @Id
-  @GeneratedValue(strategy = GenerationType.TABLE)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_seq")
+  @SequenceGenerator(name = "bid_seq", allocationSize = 1)
   private Long id;
 
   private BigDecimal price;

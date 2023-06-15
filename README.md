@@ -1,5 +1,9 @@
 # action-system
 
+
+# Setup database docker build
+`docker run --name dev_postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres:13.1-alpine`
+
 ## To use docker
 
 1. build project with `mvn clean package -DskipTests`
