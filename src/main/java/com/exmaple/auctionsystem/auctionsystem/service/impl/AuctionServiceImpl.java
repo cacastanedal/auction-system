@@ -11,11 +11,11 @@ import com.exmaple.auctionsystem.auctionsystem.service.ItemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,19 +26,17 @@ public class AuctionServiceImpl implements AuctionService {
   private final AuctionMapper mapper = Mappers.getMapper(AuctionMapper.class);
 
   @Override
-  public List<AuctionResponseDto> getAllAuctions(){
-    return auctionRepository.findAll().stream()
-      .map(mapper::toResponseDto)
-      .collect(Collectors.toList());
+  public Page<AuctionBo> getAllAuctionsByPage(Pageable pageDetails){
+    return auctionRepository.findAll(pageDetails);
   }
 
   @Override
-  public AuctionResponseDto getAuctionById(Long id){
-    return mapper.toResponseDto(auctionRepository.findById(id).orElseThrow(() -> getNotFoundError(id)));
+  public AuctionBo getAuctionById(Long id){
+    return auctionRepository.findById(id).orElseThrow(() -> getNotFoundError(id));
   }
 
   @Override
-  public AuctionResponseDto createAuction(AuctionCreateDto dto){
+  public AuctionBo createAuction(AuctionCreateDto dto){
     ItemBo itemBo = itemService.getItem(dto.getItem_id());
 
     AuctionBo auctionBo = mapper.toBo(dto);
@@ -48,11 +46,11 @@ public class AuctionServiceImpl implements AuctionService {
     auctionBo.setUpdatedAt(LocalDateTime.now());
     auctionBo.setClosesAt(LocalDateTime.now().plusDays(dto.getDaysToClose()));
 
-    return mapper.toResponseDto(auctionRepository.save(auctionBo));
+    return auctionRepository.save(auctionBo);
   }
 
   @Override
-  public AuctionResponseDto updateAuction(Long id, AuctionCreateDto dto){
+  public AuctionBo updateAuction(Long id, AuctionCreateDto dto){
     AuctionBo auctionBo = auctionRepository.findById(id).orElseThrow(() -> getNotFoundError(id));
     ItemBo itemBo = itemService.getItem(dto.getItem_id());
 
@@ -62,7 +60,7 @@ public class AuctionServiceImpl implements AuctionService {
     auctionBo.setUpdatedAt(LocalDateTime.now());
     auctionBo.setClosesAt(LocalDateTime.now().plusDays(dto.getDaysToClose()));
 
-    return mapper.toResponseDto(auctionRepository.save(auctionBo));
+    return auctionRepository.save(auctionBo);
   }
 
   @Override

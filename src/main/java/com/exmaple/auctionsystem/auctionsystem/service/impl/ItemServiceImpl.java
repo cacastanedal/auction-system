@@ -10,6 +10,8 @@ import com.exmaple.auctionsystem.auctionsystem.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +36,8 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<ItemBo> getAllItems(){
-    return itemRepository.findAll(Sort.by("id"));
+  public Page<ItemBo> getAllItems(Pageable pageable){
+    return itemRepository.findAll(pageable);
   }
 
   @Override

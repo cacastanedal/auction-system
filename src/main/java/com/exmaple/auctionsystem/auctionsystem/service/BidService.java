@@ -1,12 +1,16 @@
 package com.exmaple.auctionsystem.auctionsystem.service;
 
+import com.exmaple.auctionsystem.auctionsystem.domain.BidBo;
+import com.exmaple.auctionsystem.auctionsystem.domain.dto.BidPostDto;
 import com.exmaple.auctionsystem.auctionsystem.domain.dto.BidResponseDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface BidService {
-  List<BidResponseDto> getAllBids();
+  Page<BidBo> getAllBidsByPage(Pageable pageDetails);
 
-  BidResponseDto getBidById(Long id);
+  BidBo getBidById(Long id);
+
+  BidBo createBid(BidPostDto dto);
 }

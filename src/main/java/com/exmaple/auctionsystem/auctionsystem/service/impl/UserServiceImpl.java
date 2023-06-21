@@ -8,6 +8,8 @@ import com.exmaple.auctionsystem.auctionsystem.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,8 +41,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserBo> getAllUsers(){
-    return repository.findAll();
+  public Page<UserBo> getAllUsersByPage(Pageable pageDetails){
+    return repository.findAll(pageDetails);
   }
 
   @Override
