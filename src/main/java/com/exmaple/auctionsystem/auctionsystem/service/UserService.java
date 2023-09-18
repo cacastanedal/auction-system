@@ -16,4 +16,6 @@ public interface UserService extends UserDetailsService {
 
   UserBo updateUser(Long id, UserUpdateDto dto);
 
+  List<UserBo> findUserWithMostItems(Pageable pageable);
+
 }

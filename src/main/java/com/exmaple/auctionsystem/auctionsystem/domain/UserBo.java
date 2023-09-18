@@ -19,7 +19,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
@@ -33,11 +33,11 @@ import java.util.Set;
     @UniqueConstraint(columnNames = "username"),
     @UniqueConstraint(columnNames = "email")
   })
-@RequiredArgsConstructor
 @Setter
 @Getter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class UserBo {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -69,7 +69,9 @@ public class UserBo {
 
   private String personalIdentification;
 
-  @JsonIgnore
-  @OneToMany(mappedBy = "user")
-  private List<ItemBo> items;
+  @OneToMany(mappedBy = "itemUser")
+  private Set<ItemBo> items;
+
+  @OneToMany(mappedBy = "bidUser")
+  private Set<BidBo> bids;
 }

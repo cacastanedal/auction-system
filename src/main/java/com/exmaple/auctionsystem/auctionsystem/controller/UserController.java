@@ -57,5 +57,15 @@ public class UserController {
     return new ResponseEntity<>(service.updateUser(id, body), HttpStatus.OK);
   }
 
+  @GetMapping("/most-items")
+  ResponseEntity<List<UserResponseDto>> getUsersByMostItems(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "20") int size){
+
+    Pageable pageDetails = PageRequest.of(page, size);
+    List<UserResponseDto> response = service.findUserWithMostItems(pageDetails)
+      .stream().map(mapper::toResponseDto).toList();
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
 }

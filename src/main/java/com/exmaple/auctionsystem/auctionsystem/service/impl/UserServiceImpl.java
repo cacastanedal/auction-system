@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
     return repository.save(userBo);
   }
 
+  @Override
+  public List<UserBo> findUserWithMostItems(Pageable pageable){
+    return repository.findUserWithMostItems(pageable);
+  }
+
   private EntityNotFoundException getNotFoundError(Long id){
     return new EntityNotFoundException(String.format("User with id %s doesn't exist", id));
   }

@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Role {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
   @Enumerated(EnumType.STRING)

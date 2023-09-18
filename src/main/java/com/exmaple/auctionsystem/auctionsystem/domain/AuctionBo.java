@@ -33,6 +33,7 @@ public class AuctionBo {
   private BigDecimal askingPrice;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "item_id")
   private ItemBo item;
 
   private LocalDateTime createdAt;
